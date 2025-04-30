@@ -1,0 +1,19 @@
+@startuml
+actor Usuario
+
+usecase "Registrar Usuario" as UC1
+usecase "Validar datos del formulario" as UC2
+usecase "Validar contraseñas coincidentes" as UC3
+usecase "Hashear contraseña" as UC4
+usecase "Registrar en la base de datos" as UC5
+usecase "Mostrar mensaje de éxito o error" as UC6
+usecase "Redirigir a login" as UC7
+
+Usuario --> UC1
+UC1 --> UC2
+UC2 --> UC3
+UC3 --> UC4
+UC4 --> UC5
+UC5 --> UC6
+UC6 --> UC7
+@enduml

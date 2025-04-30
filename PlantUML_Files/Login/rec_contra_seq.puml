@@ -1,0 +1,23 @@
+@startuml
+actor Usuario
+participant "Formulario" as Form
+participant "Servidor" as Server
+database "Base de Datos" as DB
+participant "Servidor de Correo" as MailServer
+
+Usuario -> Form : Ingresa correo y envía formulario
+Form -> Server : Enviar datos del correo
+Server -> DB : Verificar si el correo existe
+DB --> Server : Devolver usuario si existe
+
+alt Correo existe
+    Server -> DB : Generar y guardar token
+    Server -> MailServer : Enviar correo con token
+    MailServer --> Server : Confirmación de envío
+    Server -> Form : Mostrar mensaje de éxito
+else Correo no existe
+    Server -> Form : Mostrar mensaje de error
+end
+
+Form --> Usuario : Mensaje de éxito o error
+@enduml

@@ -1,0 +1,25 @@
+@startuml
+actor Usuario
+participant "Formulario de Registro" as Form
+participant "Servidor" as Server
+database "Base de Datos" as DB
+
+Usuario -> Form : Ingresa datos y envía formulario
+Form -> Server : Enviar datos del formulario
+Server -> Server : Validar datos del formulario
+Server -> Server : Verificar si contraseñas coinciden
+
+alt Contraseñas coinciden
+    Server -> Server : Hashear contraseña
+    Server -> DB : Registrar usuario
+    DB --> Server : Confirmación de registro
+
+    alt Registro exitoso
+        Server -> Form : Redirigir a login
+    else Error en registro
+        Server -> Form : Mostrar mensaje de error
+    end
+else Contraseñas no coinciden
+    Server -> Form : Mostrar mensaje de error
+end
+@enduml

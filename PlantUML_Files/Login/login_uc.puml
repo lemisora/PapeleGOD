@@ -1,0 +1,28 @@
+@startuml
+left to right direction
+actor Usuario
+actor Administrador
+actor Cajero
+actor Trabajador
+
+rectangle "Sistema de Inicio de Sesión" {
+    usecase "Ingresar usuario y contraseña" as UC1
+    usecase "Verificar credenciales en base de datos" as UC2
+    usecase "Redirigir según rol" as UC3
+    usecase "Recuperar contraseña" as UC4
+    usecase "Registrar nuevo usuario (solo Cajero o Trabajador)" as UC5
+}
+
+Usuario --> UC1
+UC1 --> UC2
+UC2 --> UC3
+Usuario --> UC4
+Usuario --> UC5
+
+UC5 --> Cajero : "Crear cuenta de tipo Cajero"
+UC5 --> Trabajador : "Crear cuenta de tipo Trabajador"
+
+Administrador --> UC3 : "Redirigir a interfaz de administrador"
+Trabajador --> UC3 : "Redirigir a interfaz de trabajador"
+Cajero --> UC3 : "Redirigir a interfaz de cajero"
+@enduml

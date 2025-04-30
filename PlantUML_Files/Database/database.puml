@@ -1,0 +1,76 @@
+@startuml
+entity "detalles_venta" {
+  * id_detalle : int <<PK>>
+  --
+  id_venta : int <<FK>>
+  id_producto : int <<FK>>
+  cantidad : int
+  subtotal : decimal(10,2)
+}
+
+entity "productos" {
+  * id_producto : int <<PK>>
+  --
+  nombre : varchar(255)
+  descripcion : text
+  precio : decimal(10,2)
+  stock : int
+  categoria : varchar(255)
+  fecha_agregado : datetime
+  id_promocion : int <<FK>>
+}
+
+entity "promociones" {
+  * id_promocion : int <<PK>>
+  --
+  producto_id : int <<FK>>
+  nombre : varchar(255)
+  descripcion : text
+  descuento : decimal(5,2)
+  fecha_inicio : datetime
+  fecha_fin : datetime
+  activo : tinyint(1)
+}
+
+entity "proveedores" {
+  * id_proveedor : int <<PK>>
+  --
+  nombre : varchar(255)
+  contacto : varchar(255)
+  fecha_creacion : timestamp
+}
+
+entity "roles" {
+  * id_rol : int <<PK>>
+  --
+  nombre : varchar(50) <<UNIQUE>>
+  descripcion : text
+}
+
+entity "usuarios" {
+  * id_usuario : int <<PK>>
+  --
+  nombre : varchar(255)
+  email : varchar(255) <<UNIQUE>>
+  usuario : varchar(255) <<UNIQUE>>
+  password_hash : varchar(255)
+  id_rol : int <<FK>>
+  fecha_registro : datetime
+  estado : enum('activo','inactivo')
+}
+
+entity "ventas" {
+  * id_venta : int <<PK>>
+  --
+  fecha_venta : datetime
+  total : decimal(10,2)
+  metodo_pago : enum('efectivo','tarjeta','spei')
+}
+
+' Relaciones entre tablas
+detalles_venta::id_venta --> ventas::id_venta
+detalles_venta::id_producto --> productos::id_producto
+productos::id_promocion --> promociones::id_promocion
+promociones::producto_id --> productos::id_producto
+usuarios::id_rol --> roles::id_rol
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+actor Usuario
+participant "Formulario de Inicio de Sesión" as Form
+participant "Servidor PHP" as PHP
+database "Base de Datos" as DB
+
+Usuario -> Form: Introducir usuario y contraseña
+Form -> PHP: Enviar credenciales
+PHP -> DB: Consultar usuario por nombre
+DB --> PHP: Retornar hash de contraseña y rol
+
+alt Credenciales correctas
+    PHP -> PHP: Verificar hash de contraseña
+    alt Rol válido
+        PHP -> PHP: Crear sesión (ID, Rol)
+        alt Administrador
+            PHP -> Form: Redirigir a administrador.php
+        else Trabajador
+            PHP -> Form: Redirigir a interfaztrabajador.php
+        else Cajero
+            PHP -> Form: Redirigir a interfazcajero.php
+        end
+    else Rol desconocido
+        PHP -> Form: Mostrar error ("Rol desconocido")
+    end
+else Credenciales incorrectas
+    PHP -> Form: Mostrar error ("Usuario o contraseña incorrectos")
+end
+@enduml

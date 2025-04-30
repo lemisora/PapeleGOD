@@ -1,0 +1,15 @@
+@startuml
+actor Usuario
+
+usecase "Solicitar recuperación de contraseña" as UC1
+usecase "Validar correo electrónico" as UC2
+usecase "Generar y guardar token de recuperación" as UC3
+usecase "Enviar correo con enlace de recuperación" as UC4
+usecase "Mostrar mensaje de éxito o error" as UC5
+
+Usuario --> UC1
+UC1 --> UC2
+UC2 --> UC3
+UC3 --> UC4
+UC2 --> UC5
+@enduml

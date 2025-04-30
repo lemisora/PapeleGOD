@@ -1,0 +1,18 @@
+Array
+(
+    [productos] => Array
+        (
+            [0] => Array
+                (
+                    [id_producto] => 1
+                    [nombre] => Mapa
+                    [cantidad] => 1
+                    [precio] => 5
+                    [subtotal] => 5
+                )
+
+        )
+
+    [total] => 5.00
+    [metodoPago] => efectivo
+)
